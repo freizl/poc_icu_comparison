@@ -1,0 +1,22 @@
+{
+  "name": "poc-icu-comparison",
+  "version": "1.0.0",
+  "description": "",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hw202207/poc_icu_comparison.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hw202207/poc_icu_comparison/issues"
+  },
+  "homepage": "https://github.com/hw202207/poc_icu_comparison#readme",
+  "dependencies": {
+    "pg": "^8.11.3"
+  }
+}
