@@ -39,4 +39,4 @@ jobs:
           cabal build --only-dependencies all
 
       - name: Build
-        run: cabal run
+        run: cabal run icu-haskell
