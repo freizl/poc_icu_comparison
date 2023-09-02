@@ -46,11 +46,20 @@ jobs:
         # Environment variables used by the `client.js` script to create
         # a new PostgreSQL table.
         env:
-          # The hostname used to communicate with the PostgreSQL service container
           POSTGRES_HOST: postgres
-          # POSTGRES_HOST: localhost
-          # The default PostgreSQL port
           POSTGRES_PORT: 5432
 
       - name: uname
         run: uname -a
+
+      - name: Install PostgreSQL Client
+        run: |
+          sudo apt-get -yqq install postgresql-client
+      - name: Run SQL Script
+        env:
+          PGPASSWORD: postgres
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: 5432
+        run: |
+          psql --help
+          psql -U postgres -d postgres -f sql/test.sql
