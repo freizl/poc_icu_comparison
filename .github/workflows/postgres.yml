@@ -36,24 +36,17 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
 
-      - name: Install PostgreSQL Client
-        run: |
-          sudo apt-get -yqq install postgresql-client
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Debug
-        run: |
-          echo "Debugging information:"
-          echo "POSTGRES_USER: $POSTGRES_USER"
-          echo "POSTGRES_DB: $POSTGRES_DB"
-          echo "POSTGRES_HOST: $POSTGRES_HOST"
-          echo "POSTGRES_PORT: $POSTGRES_PORT"
-          ss -tuln
-
-      - name: Run SQL Script
+      - name: Connect to PostgreSQL
+        # Runs a script that creates a PostgreSQL table, populates
+        # the table with data, and then retrieves the data
+        run: node client.js
+        # Environment variables used by the `client.js` script to create
+        # a new PostgreSQL table.
         env:
-          PGPASSWORD: postgres
+          # The hostname used to communicate with the PostgreSQL service container
           POSTGRES_HOST: localhost
+          # The default PostgreSQL port
           POSTGRES_PORT: 5432
-        run: |
-          psql --help
-          psql -U hw_foo_user -d hw_foo -f sql/test.sql
