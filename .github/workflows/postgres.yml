@@ -6,23 +6,34 @@ on:
       - main
 
 jobs:
-  build:
+  # Label of the runner job
+  runner-job:
+    # You must use a Linux environment when using service containers or container jobs
     runs-on: ubuntu-latest
 
+    # Service containers to run with `runner-job`
     services:
+      # Label used to access the service container
       postgres:
-        image: postgres:latest
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
         env:
-          POSTGRES_DB: hw_foo
-          POSTGRES_USER: hw_foo_user
           POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
         ports:
+          # Maps tcp port 5432 on service container to the host
           - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      # Downloads a copy of the code in your repository before running CI tests
+      - name: Check out repository code
+        uses: actions/checkout@v3
 
       - name: Install PostgreSQL Client
         run: |
@@ -40,8 +51,7 @@ jobs:
       - name: Run SQL Script
         env:
           PGPASSWORD: postgres
-          POSTGRES_HOST: postgres
-          # POSTGRES_HOST: localhost
+          POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
         run: |
           psql --help
