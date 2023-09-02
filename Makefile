@@ -19,4 +19,7 @@ clean:
 run: $(EXEC)
 	./$(EXEC)
 
+helloworld:
+	(echo "locked_by"; echo "lock_note";) | LC_COLLATE=en_US.UTF-8 sort --debug
+
 .PHONY: all clean
