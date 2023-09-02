@@ -43,28 +43,28 @@ int main() {
   return 0;
 }
 
-int main3() {
-  UErrorCode status = U_ZERO_ERROR;
-  UCollator *collator = ucol_open("", &status);
+/* int main3() { */
+/*   UErrorCode status = U_ZERO_ERROR; */
+/*   UCollator *collator = ucol_open("", &status); */
 
-  if (U_FAILURE(status)) {
-    fprintf(stderr, "Error opening collator: %s\n", u_errorName(status));
-    return 1;
-  }
+/*   if (U_FAILURE(status)) { */
+/*     fprintf(stderr, "Error opening collator: %s\n", u_errorName(status)); */
+/*     return 1; */
+/*   } */
 
-  const UChar *str1 = u"locked_by";
-  const UChar *str2 = u"lock_note";
+/*   const UChar *str1 = u"locked_by"; */
+/*   const UChar *str2 = u"lock_note"; */
 
-  int32_t result = ucol_strcoll(collator, str1, -1, str2, -1);
+/*   int32_t result = ucol_strcoll(collator, str1, -1, str2, -1); */
 
-  if (U_FAILURE(status)) {
-    fprintf(stderr, "Error comparing strings: %s\n", u_errorName(status));
-    ucol_close(collator);
-    return 1;
-  }
+/*   if (U_FAILURE(status)) { */
+/*     fprintf(stderr, "Error comparing strings: %s\n", u_errorName(status)); */
+/*     ucol_close(collator); */
+/*     return 1; */
+/*   } */
 
-  printf("%s, %s, %d", str1, str2, result);
+/*   printf("%s, %s, %d", str1, str2, result); */
 
-  ucol_close(collator);
-  return 0;
-}
+/*   ucol_close(collator); */
+/*   return 0; */
+/* } */
