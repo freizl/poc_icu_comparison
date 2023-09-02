@@ -31,7 +31,8 @@ jobs:
       - name: Run SQL Script
         env:
           PGPASSWORD: postgres
-          POSTGRES_HOST: postgres
+          # POSTGRES_HOST: postgres
+          POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
         run: |
           psql --help
