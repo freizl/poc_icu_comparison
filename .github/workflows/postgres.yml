@@ -30,4 +30,4 @@ jobs:
 
       - name: Run SQL Script
         run: |
-          psql -h localhost -U hw_foo_user -d hw_foo_123 -f sql/test.sql
+          psql -h localhost -U hw_foo_user -d hw_foo -f sql/test.sql
