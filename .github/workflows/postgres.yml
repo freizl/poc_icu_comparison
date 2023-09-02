@@ -13,8 +13,8 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          # POSTGRES_DB: hw_foo
-          # POSTGRES_USER: hw_foo_user
+          POSTGRES_DB: hw_foo
+          POSTGRES_USER: hw_foo_user
           POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
@@ -31,4 +31,4 @@ jobs:
       - name: Run SQL Script
         run: |
           psql --help
-          PGPASSWORD=gestgres psql -h localhost -f sql/test.sql
+          PGPASSWORD=gestgres psql -Uhw_foo_user -dhw_foo -f sql/test.sql
