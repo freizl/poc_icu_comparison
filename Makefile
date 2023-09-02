@@ -22,4 +22,9 @@ run: $(EXEC)
 helloworld:
 	(echo "locked_by"; echo "lock_note";) | LC_COLLATE=en_US.UTF-8 sort --debug
 
+versions:
+	sort --version
+	uname -a
+	icu-config --version
+
 .PHONY: all clean

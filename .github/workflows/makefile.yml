@@ -17,9 +17,8 @@ jobs:
     - name: icu string comparison
       run: make run
 
-    - name: sort version
-      run: sort --version
-
     - name: run sort
       run: make helloworld
 
+    - name: versions
+      run: make versions
