@@ -25,6 +25,7 @@ helloworld:
 versions:
 	sort --version
 	uname -a
-	icu-config --version
+	uconv --version
+	# icu-config --version
 
 .PHONY: all clean
