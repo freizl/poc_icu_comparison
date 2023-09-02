@@ -21,7 +21,7 @@ executable icu-haskell
     main-is:          Main.hs
     -- other-modules:
     -- other-extensions:
-    build-depends:    base ^>=4.17.1.0
+    build-depends:    base >=4.17.1.0
                     , text >= 2.0
                     , text-icu >= 0.8
     hs-source-dirs:   app
