@@ -28,11 +28,20 @@ jobs:
         run: |
           sudo apt-get -yqq install postgresql-client
 
+      - name: Debug
+        run: |
+          echo "Debugging information:"
+          echo "POSTGRES_USER: $POSTGRES_USER"
+          echo "POSTGRES_DB: $POSTGRES_DB"
+          echo "POSTGRES_HOST: $POSTGRES_HOST"
+          echo "POSTGRES_PORT: $POSTGRES_PORT"
+          ss -tuln
+
       - name: Run SQL Script
         env:
           PGPASSWORD: postgres
-          # POSTGRES_HOST: postgres
-          POSTGRES_HOST: localhost
+          POSTGRES_HOST: postgres
+          # POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
         run: |
           psql --help
