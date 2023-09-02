@@ -31,4 +31,4 @@ jobs:
       - name: Run SQL Script
         run: |
           psql --help
-          export PGPASSWORD=hw_foo123; psql -h localhost -U hw_foo_user -d hw_foo -f sql/test.sql
+          PGPASSWORD=hw_foo123 psql -h localhost -U hw_foo_user -d hw_foo -f sql/test.sql
