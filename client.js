@@ -10,12 +10,15 @@ const pgclient = new Client({
 
 pgclient.connect();
 
-const allQuery = `
-  select version();
-  select '_' collate \"en_US\" < 'e' collate \"en_US\";
-  select 'lock_note' collate \"en_US\" < 'locked_by' collate \"en_US\";
-`;
-pgclient.query(allQuery, (err, res) => {
+pgclient.query('select version();', (err, res) => {
+    if (err) throw err
+    console.log(err, res.rows);
+});
+pgclient.query("select '_' collate \"en_US\" < 'e' collate \"en_US\";", (err, res) => {
+    if (err) throw err
+    console.log(err, res.rows);
+});
+pgclient.query("select 'lock_note' collate \"en_US\" < 'locked_by' collate \"en_US\";", (err, res) => {
     if (err) throw err
     console.log(err, res.rows);
 });
