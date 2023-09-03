@@ -24,3 +24,8 @@ pgclient.query("select 'lock_note' collate \"en_US\" < 'locked_by' collate \"en_
     pgclient.end()
 });
 
+pgclient.query("select 'lock_note' collate \"C\" < 'locked_by' collate \"C\";", (err, res) => {
+    if (err) throw err
+    console.log(err, res.rows);
+    pgclient.end()
+});
