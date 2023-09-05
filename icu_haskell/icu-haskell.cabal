@@ -24,5 +24,6 @@ executable icu-haskell
     build-depends:    base >=4.17.1.0
                     , text >= 2.0
                     , text-icu >= 0.8
+                    , unicode-collation
     hs-source-dirs:   app
     default-language: GHC2021
