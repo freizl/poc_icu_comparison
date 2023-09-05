@@ -1,0 +1,52 @@
+#+title: Readme
+
+* The Problem
+
+The following query yields different in different Operation System. I did some google search and sounds like it is related to Locale/Collate settings.
+
+#+begin_src sql
+SELECT ARRAY(SELECT UNNEST(ARRAY['id', 'organization_id', 'locked_by', 'lock_reasons', 'lock_note', 'lock_source', 'sent_notification_emails', 'created_at']) ORDER BY 1);
+#+end_src
+
+- with ~Collate "C"~, I got result
+  #+begin_example
+ {created_at,id,lock_note,lock_reasons,lock_source,locked_by,organization_id,sent_notification_emails}
+  #+end_example
+
+- with ~Collate "UTF-8"~, I got result
+  #+begin_example
+ {created_at,id,locked_by,lock_note,lock_reasons,lock_source,organization_id,sent_notification_emails}
+  #+end_example
+
+* Troubleshooting
+
+Looks like the break happens on whether ~_~ is smaller than ~e~ or not.
+Presumably, it shall given their sequence number in ASCII is 95 and 101 respectively.
+
+However, following queries does not always yield ~True~ but ~True~ and ~False~ in different operating systems.
+
+#+begin_src sql
+SELECT '_' COLLATE "en_US" < 'e' COLLATE "en_US";
+
+SELECT 'lock_note' COLLATE "en_US" < 'locked_by' COLLATE "en_US";
+#+end_src
+
+I didn't some google search and the general impression I got is when locale is enabled, sorting in postgres leveraging locale rule from Operating System and the rules may vary cross OS, which could explain why aforementioned queries yields inconsistent result cross OS.
+
+My actual problem to solve is to want same sorting result between postgres and my Application code and both run in same OS. A very quick skim to postgres source gives me impression that postgres utilize ~ucol_strcollUTF8~ when comes to UTF-8 sorting.
+So I *assume* if my application code call ~ucol_strcollUTF8~, it shall given same result as postgres.
+I did POC (see details in ~icu_string_comparison.c~) and I got following result, which is not same to postgres.
+
+#+begin_example
+"lock_note" is smaller than "locked_by"
+#+end_example
+
+Quick recap
+
+| Code                                                               | Result |
+|--------------------------------------------------------------------+--------|
+| ~SELECT 'lock_note' COLLATE "en_US" < 'locked_by' COLLATE "en_US"~ | False  |
+| icu_string_comparison.c: ~'lock_note'~ < ~'locked_by'~             | True   |
+
+
+So I probably missed something like sorting in postgres is not as simply as using ~ucol_strcolUTF8~ and something else.
