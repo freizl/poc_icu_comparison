@@ -47,7 +47,7 @@ I did POC (see details in ~icu_string_comparison.c~) and I got following result,
 | Code                                                               | Result |
 |--------------------------------------------------------------------+--------|
 | ~SELECT 'lock_note' COLLATE "en_US" < 'locked_by' COLLATE "en_US"~ | False  |
-| icu_string_comparison.c: ~'lock_note'~ < ~'locked_by'~             | True   |
+| ~icu_string_comparison.c~: ~'lock_note'~ < ~'locked_by'~           | True   |
 
 
 So I probably missed something like sorting in postgres is not as simply as using ~ucol_strcolUTF8~ and something else.

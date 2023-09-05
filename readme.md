@@ -1,12 +1,12 @@
 
 # Table of Contents
 
-1.  [The Problem](#org93d01af)
-2.  [Troubleshooting](#orgdeea5dd)
+1.  [The Problem](#orgc049456)
+2.  [Troubleshooting](#org1255a35)
 
 
 
-<a id="org93d01af"></a>
+<a id="orgc049456"></a>
 
 # The Problem
 
@@ -23,7 +23,7 @@ The following query yields different in different Operation System. I did some g
         {created_at,id,locked_by,lock_note,lock_reasons,lock_source,organization_id,sent_notification_emails}
 
 
-<a id="orgdeea5dd"></a>
+<a id="org1255a35"></a>
 
 # Troubleshooting
 
@@ -70,7 +70,7 @@ I did POC (see details in `icu_string_comparison.c`) and I got following result,
 
 
 <tr>
-<td class="org-left">icu<sub>string</sub><sub>comparison.c</sub>: <code>'lock_note'</code> &lt; <code>'locked_by'</code></td>
+<td class="org-left"><code>icu_string_comparison.c</code>: <code>'lock_note'</code> &lt; <code>'locked_by'</code></td>
 <td class="org-left">True</td>
 </tr>
 </tbody>
