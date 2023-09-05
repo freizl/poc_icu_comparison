@@ -21,7 +21,7 @@ SELECT ARRAY(SELECT UNNEST(ARRAY['id', 'organization_id', 'locked_by', 'lock_rea
 * Troubleshooting
 
 Looks like the break happens on whether ~_~ is smaller than ~e~ or not.
-Presumably, it shall given their sequence number in ASCII is 95 and 101 respectively.
+Presumably, it shall be given their sequence number in ASCII is 95 and 101 respectively.
 
 However, following queries does not always yield ~True~ but ~True~ and ~False~ in different operating systems.
 
@@ -31,9 +31,10 @@ SELECT '_' COLLATE "en_US" < 'e' COLLATE "en_US";
 SELECT 'lock_note' COLLATE "en_US" < 'locked_by' COLLATE "en_US";
 #+end_src
 
-I didn't some google search and the general impression I got is when locale is enabled, sorting in postgres leveraging locale rule from Operating System and the rules may vary cross OS, which could explain why aforementioned queries yields inconsistent result cross OS.
+I did some google search and the general impression I got is when locale is enabled, sorting in postgres leveraging locale rule from Operating System and the rules may vary cross OS, which could explain why aforementioned queries yields inconsistent result cross OS.
 
-My actual problem to solve is to want same sorting result between postgres and my Application code and both run in same OS. A very quick skim to postgres source gives me impression that postgres utilize ~ucol_strcollUTF8~ when comes to UTF-8 sorting.
+My actual problem to solve is to want same sorting result between postgres and my Application code(both run at same OS).
+A very quick skim to postgres source code gives me impression that postgres utilize ~ucol_strcollUTF8~ when for UTF-8 sorting.
 So I *assume* if my application code call ~ucol_strcollUTF8~, it shall given same result as postgres.
 I did POC (see details in ~icu_string_comparison.c~) and I got following result, which is not same to postgres.
 
@@ -41,7 +42,7 @@ I did POC (see details in ~icu_string_comparison.c~) and I got following result,
 "lock_note" is smaller than "locked_by"
 #+end_example
 
-Quick recap
+*Quick recap*
 
 | Code                                                               | Result |
 |--------------------------------------------------------------------+--------|
