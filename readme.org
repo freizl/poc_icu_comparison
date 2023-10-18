@@ -17,7 +17,7 @@ SELECT ARRAY(SELECT UNNEST(ARRAY['id', 'organization_id', 'locked_by', 'lock_rea
   #+begin_example
  {created_at,id,locked_by,lock_note,lock_reasons,lock_source,organization_id,sent_notification_emails}
   #+end_example
-
+change 1
 * Troubleshooting
 
 Looks like the break happens on whether ~_~ is smaller than ~e~ or not.
@@ -32,6 +32,8 @@ SELECT 'lock_note' COLLATE "en_US" < 'locked_by' COLLATE "en_US";
 #+end_src
 
 I did some google search and the general impression I got is when locale is enabled, sorting in postgres leveraging locale rule from Operating System and the rules may vary cross OS, which could explain why aforementioned queries yields inconsistent result cross OS.
+
+another changes
 
 My actual problem to solve is to want same sorting result between postgres and my Application code(both run at same OS).
 A very quick skim to postgres source code gives me impression that postgres utilize ~ucol_strcollUTF8~ when for UTF-8 sorting.
@@ -48,6 +50,6 @@ I did POC (see details in ~icu_string_comparison.c~) and I got following result,
 |--------------------------------------------------------------------+--------|
 | ~SELECT 'lock_note' COLLATE "en_US" < 'locked_by' COLLATE "en_US"~ | False  |
 | ~icu_string_comparison.c~: ~'lock_note'~ < ~'locked_by'~           | True   |
+| test      |false| 
 
-
-So I probably missed something like sorting in postgres is not as simply as using ~ucol_strcolUTF8~ and something else.
+So I probably missing in postgres is not as simply as using ~ucol_strcolUTF8~ and something else.
